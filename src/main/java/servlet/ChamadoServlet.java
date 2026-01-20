@@ -102,24 +102,5 @@ public class ChamadoServlet extends HttpServlet {
 		}
 	}
 
-	@Override
-	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		try {
-			
-			ConnectionFactory criaConexao = new ConnectionFactory();
-			Connection connection = criaConexao.recuperarConexao();
-			ChamadoDAO dao = new ChamadoDAO(connection);
-			connection.setAutoCommit(false);
-			
-			dao.delete(Integer.parseInt(req.getParameter("id")));
-			
-			connection.close();
-			
-			resp.sendRedirect("/chamado");
-			
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 }

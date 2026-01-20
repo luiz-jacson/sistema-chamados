@@ -12,41 +12,30 @@ import javax.servlet.http.HttpServletResponse;
 import dao.ChamadoDAO;
 import dao.ConnectionFactory;
 
-
-@WebServlet(name = "AtualizaChamadoServlet", urlPatterns = {"/atualizaChamado"})
-public class AtualizaChamadoServlet extends HttpServlet {
+/**
+ * Servlet implementation class DeletaChamadoServlet
+ */
+@WebServlet(name = "DeletaChamadoServlet", urlPatterns = {"/deletaChamado"})
+public class DeletaChamadoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public AtualizaChamadoServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
+
 			ConnectionFactory criaConexao = new ConnectionFactory();
 			Connection connection = criaConexao.recuperarConexao();
 			ChamadoDAO dao = new ChamadoDAO(connection);
 			connection.setAutoCommit(false);
-			int id = Integer.parseInt(req.getParameter("id"));
-			String titulo = req.getParameter("titulo");
-			String descricao = req.getParameter("descricao");
-			String status = req.getParameter("status");
 
-
-			dao.update(id, titulo, descricao, status);
+			dao.delete(Integer.parseInt(req.getParameter("id")));
 
 			connection.close();
-			
+
 			resp.sendRedirect("chamado");
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
-
 		}
 	}
 
