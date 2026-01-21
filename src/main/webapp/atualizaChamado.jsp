@@ -11,11 +11,12 @@
 <body>
 
 	<form action="${linkServletAtualizaChamado}" method="POST">
-		Título: <input type="text" name="titulo"/>
+		<input type="hidden" name="id" value="${chamado.id}">
+		Título: <input type="text" name="titulo" value="${chamado.titulo}"/>
 		<br/>
-		Descricao: <input type="area" name="descricao"/>
+		Descricao: <input type="area" name="descricao" value="${chamado.descricao}"/>
 		<br/>
-		Status: <input type="text" name="status"/>
+		Status: <input type="text" name="status" value ="${chamado.status}"/>
 		<br/>
 		<input type="submit" value="Criar"> 
 	</form>

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.ChamadoDAO;
-import dao.ConnectionFactory;
+import dao.ConnectionHibernate;
 
 /**
  * Servlet implementation class DeletaChamadoServlet
@@ -23,14 +23,10 @@ public class DeletaChamadoServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 
-			ConnectionFactory criaConexao = new ConnectionFactory();
-			Connection connection = criaConexao.recuperarConexao();
-			ChamadoDAO dao = new ChamadoDAO(connection);
-			connection.setAutoCommit(false);
+			ChamadoDAO dao = new ChamadoDAO(ConnectionHibernate.getEntityManager());
 
 			dao.delete(Integer.parseInt(req.getParameter("id")));
 
-			connection.close();
 
 			resp.sendRedirect("chamado");
 

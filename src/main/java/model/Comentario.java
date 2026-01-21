@@ -1,8 +1,27 @@
 package model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="comentario")
 public class Comentario {
+	
+	public Comentario() {
+		
+	}
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
 	private String texto;
+	
+	@Column(name="chamado_id")
 	private int chamado_id;
 	
 	public Comentario(String texto, int chamado_id) {

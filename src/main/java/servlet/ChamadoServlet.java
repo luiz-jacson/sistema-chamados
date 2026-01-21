@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.ChamadoDAO;
-import dao.ConnectionFactory;
+import dao.ConnectionHibernate;
 import model.Chamado;
 
 @WebServlet(name = "chamadoServlet", urlPatterns = { "/chamado" })
@@ -25,10 +26,7 @@ public class ChamadoServlet extends HttpServlet {
 
 		PrintWriter out = response.getWriter();
 		try {
-			ConnectionFactory criaConexao = new ConnectionFactory();
-			Connection connection = criaConexao.recuperarConexao();
-			ChamadoDAO dao = new ChamadoDAO(connection);
-			connection.setAutoCommit(false);
+			ChamadoDAO dao = new ChamadoDAO(ConnectionHibernate.getEntityManager());
 
 			String titulo = request.getParameter("titulo");
 			String descricao = request.getParameter("descricao");
@@ -40,11 +38,6 @@ public class ChamadoServlet extends HttpServlet {
 			chamado.setDescricao(descricao);
 
 			Chamado result = dao.insert(chamado);
-
-			connection.close();
-//			RequestDispatcher rd = request.getRequestDispatcher("/ListarChamados.jsp");
-//			request.setAttribute("titulo", chamado.getTitulo());
-//			rd.forward(request, response);
 			
 			response.sendRedirect("chamado");
 			
@@ -58,15 +51,10 @@ public class ChamadoServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			ConnectionFactory criaConexao = new ConnectionFactory();
-			Connection connection = criaConexao.recuperarConexao();
-			ChamadoDAO dao = new ChamadoDAO(connection);
-			connection.setAutoCommit(false);
+			ChamadoDAO dao = new ChamadoDAO(ConnectionHibernate.getEntityManager());
 			
 			List<Chamado> chamados = dao.getAll();
 			
-
-			connection.close();
 			RequestDispatcher rd = req.getRequestDispatcher("/ListarChamados.jsp");
 			req.setAttribute("chamados", chamados);
 			rd.forward(req, resp);
@@ -77,30 +65,7 @@ public class ChamadoServlet extends HttpServlet {
 		
 	}
 
-	@Override
-	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		try {
-			ConnectionFactory criaConexao = new ConnectionFactory();
-			Connection connection = criaConexao.recuperarConexao();
-			ChamadoDAO dao = new ChamadoDAO(connection);
-			connection.setAutoCommit(false);
-			int id = Integer.parseInt(req.getParameter("id"));
-			String titulo = req.getParameter("titulo");
-			String descricao = req.getParameter("descricao");
-			String status = req.getParameter("status");
 
-
-			dao.update(id, titulo, descricao, status);
-
-			connection.close();
-			
-			resp.sendRedirect("chamado");
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-
-		}
-	}
 
 
 }

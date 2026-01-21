@@ -1,6 +1,12 @@
 package model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="chamado")
 public class Chamado {
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
 	private String titulo;
 	private String descricao;
