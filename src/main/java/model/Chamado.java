@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,6 +14,9 @@ public class Chamado {
 	private String descricao;
 	private String status;
 	
+	@OneToMany(mappedBy = "chamado", fetch = FetchType.LAZY)
+	private List<Comentario> comentario;
+	
 	public Chamado(String titulo, String descricao, String status) {
 		this.titulo = titulo;
 		this.descricao = descricao;
@@ -22,6 +27,15 @@ public class Chamado {
 		
 	}
 	
+	
+	public List<Comentario> getComentario() {
+		return comentario;
+	}
+
+	public void setComentario(List<Comentario> comentario) {
+		this.comentario = comentario;
+	}
+
 	public int getId() {
 		return id;
 	}

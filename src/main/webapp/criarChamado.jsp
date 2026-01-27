@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1" import="java.util.List, model.Chamado"%>
+	pageEncoding="ISO-8859-1" import="java.util.List,dominio.Chamado"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:url value = "/chamado" var="linkServletNovoChamado"/>
 <!DOCTYPE html>

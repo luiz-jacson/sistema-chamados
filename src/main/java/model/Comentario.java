@@ -1,11 +1,10 @@
 package model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -21,12 +20,19 @@ public class Comentario {
 	private int id;
 	private String texto;
 	
-	@Column(name="chamado_id")
-	private int chamado_id;
+	@ManyToOne
+	private Chamado chamado;
 	
+	public Chamado getChamado() {
+		return chamado;
+	}
+
+	public void setChamado(Chamado chamado) {
+		this.chamado = chamado;
+	}
+
 	public Comentario(String texto, int chamado_id) {
 		this.texto = texto;
-		this.chamado_id = chamado_id;
 	}
 	
 	public int getId() {
@@ -40,12 +46,6 @@ public class Comentario {
 	}
 	public void setTexto(String texto) {
 		this.texto = texto;
-	}
-	public int getChamado_id() {
-		return chamado_id;
-	}
-	public void setChamado_id(int chamado_id) {
-		this.chamado_id = chamado_id;
 	}
 	
 	
