@@ -20,12 +20,10 @@ dependencies {
     
     compileOnly 'javax:javaee-api:6.0'
 
-    // Spring 3.2
     implementation 'org.springframework:spring-core:3.2.18.RELEASE'
     implementation 'org.springframework:spring-beans:3.2.18.RELEASE'
     implementation 'org.springframework:spring-context:3.2.18.RELEASE'
     implementation 'org.springframework:spring-web:3.2.18.RELEASE'
 
-    // Logging (evita NPE estranha no deploy)
     implementation 'commons-logging:commons-logging:1.2'
 }
